@@ -1,0 +1,125 @@
+<html>
+<head>
+	<style type="text/css">
+	body {
+	  margin: 0;
+	  background: #000; 
+	  overflow: hidden;
+	}
+	video { 
+	    position: fixed;
+	    top: 50%;
+	    left: 50%;
+	    min-width: 100%;
+	    min-height: 100%;
+	    width: auto;
+	    height: auto;
+	    z-index: -100;
+	    transform: translateX(-50%) translateY(-50%);
+		background-size: cover;
+		transition: 1s opacity;
+	}
+	</style>
+<video id="bgvid" playsinline autoplay muted loop>
+<source src="http://jp.progames.club/images/bg.mp4" type="video/mp4">
+</video>
+	<script src="html/mystery_counter2.js"></script>
+</head>
+<body>
+    <div id="mystery_div" style="position:absolute; top:0; left:0; width:100%; height:100%; display:block; text-align: center;">
+    <br><br>
+    <!--// Super Mystery Bonus -->
+        <div id="super" style="width:400px; margin-top: 200px; margin-left: 400px;">
+                <canvas id="superMystery" height="50" width="350">browser not supported!</canvas>
+        </div>
+    <!--// Super Mystery Bonus -->
+    <!--// Gold Mystery Bonus -->
+        <div id="gold" style="width:400px; margin-left: 400px;">
+                <canvas id="goldMystery" height="50" width="350">browser not supported!</canvas>
+        </div>
+    <!--// Gold Mystery Bonus -->
+    <!--// Mini Mystery Bonus -->
+        <div id="mini" style="width:400px; margin-left: 400px;">
+                <canvas id="miniMystery" height="50" width="350">browser not supported!</canvas>
+        </div>
+    <!--// Mini Mystery Bonus -->
+
+    <!--// Mystery Payout Screen -->
+    </div>
+    <div id="logo" style="position:absolute; bottom:0; left:0; width:100%; height:5%; display:block; background:rgba(255,255,255,0.5); z-index:1;" align="center">
+    	<img src="http://jp.progames.club/images/mosquito-logo.png" height="100%">
+    	<div style="position: absolute;bottom:0; right:0;">
+    		<font color="black" size="2" style="float: right;">БУЛГЕЙМС ДЖАКПОТ СЪРВЪР v.2.00 &reg;</font>
+    	</div>
+    </div>
+<!--// lost connection -->
+	<div id="lost_conn" style="height:100%; width:100%; position:fixed; top:0px; left:0px; z-index:20; background-color:000; display:none" align="center">
+		<div id="lost_conn_txt" style="position:relative; padding:20px; border-color:black; border:thin; border-style:double; top:100px; width: 91%; z-index:25; line-height: 200px; background: linear-gradient(to bottom, #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%); border-radius: 15px; text-decoration:none; text-shadow: #000 0px 0px 5px;">
+				<font style="color:#FFF; font-size: 200; font-weight: bold;"> Lost Connection! </font>
+		</div>
+	</div>
+<!--// lost connection -->
+
+<script type="text/javascript">
+    var response;
+    var response2="0|0|0|0|0";
+    var bonus_tot=0;
+    var bonus_start=0;
+    var bonus_end=0;
+    var bonus_bet=0;
+    var bonus_val=0;
+    var start_mini = 0;
+    var stop_mini = 0;
+    var odo_mini;
+    var start_gold = 0;
+    var stop_gold = 0;
+    var odo_gold;
+    var start_super = 0;
+    var stop_super = 0;
+    var odo_super;
+    var prize = 0;
+    var prize_val=0.01;
+    var prize_winner=0;
+    var audio_loop=0;
+    var audioElement;
+
+        var response="1200|800|120";
+        var bonus_array = response.split("|");
+        stop_mini = bonus_array[0]-1;
+        stop_gold = bonus_array[1]-1;
+        stop_super = bonus_array[2]-1;
+
+    function run() {
+        var ctx_mini = document.getElementById('miniMystery').getContext('2d');
+        var ctx_gold = document.getElementById('goldMystery').getContext('2d');
+        var ctx_super = document.getElementById('superMystery').getContext('2d');
+
+        odo_mini = new odometer(ctx_mini, {height: 250,digits: 4,decimals: 2,value: start_mini});
+        odo_gold = new odometer(ctx_gold, {height: 250,digits: 4,decimals: 2,value: start_gold});
+        odo_super = new odometer(ctx_super, {height: 250,digits: 4,decimals: 2,value: start_super});
+        update();
+    }
+
+    function update() {
+        if(start_mini<stop_mini){
+            start_mini += (stop_mini-start_mini)/10;
+        }
+
+        if(start_gold<stop_gold){
+            start_gold += (stop_gold-start_gold)/12.5;
+        }
+
+        if(start_super<stop_super){
+            start_super += (stop_super-start_super)/15;
+        }
+                
+        odo_mini.setValue(start_mini);
+        odo_gold.setValue(start_gold);
+        odo_super.setValue(start_super);
+        setTimeout(update, 100);
+    }
+    
+	run();
+</script>
+</body>
+</html>
